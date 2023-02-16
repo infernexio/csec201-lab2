@@ -11,6 +11,6 @@ struct Digest{
     BYTE hash0, hash1, hash2, hash3, hash4;
 };
 
-unsigned char* SHA_40(const unsigned char* data, size_t size); // SHA_40 hash function 
+struct Digest* SHA_40(const unsigned char* data, size_t size); // SHA_40 hash function 
 int digest_equal(struct Digest *digest1, struct Digest *digest2); //return 1 (true) or 0 (false)
 int is_digest_low(struct Digest *digest); // used by mine_block
