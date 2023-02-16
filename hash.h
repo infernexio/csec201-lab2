@@ -13,4 +13,5 @@ struct Digest{
 
 struct Digest* SHA_40(const unsigned char* data, size_t size); // SHA_40 hash function 
 int digest_equal(struct Digest *digest1, struct Digest *digest2); //return 1 (true) or 0 (false)
+// is this supposed to be used????
 int is_digest_low(struct Digest *digest); // used by mine_block
