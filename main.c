@@ -1,25 +1,19 @@
 #include "hash.h"
 
 int main (int argc, char** argv) {
-    char *seed = (char *) malloc(DIGEST_SIZE*sizeof(char));
     char input[100] = {0};
-    seed[0] = 11;
-    seed[1] = 22;
-    seed[2] = 33;
-    seed[3] = 44;
-    seed[4] = 55;
+
 
     printf("Enter a input: ");
     scanf("%s", input);
     
     for(int i = 0; i < strlen(input); i++){
         if(input[i] != '\0'){
-            for(int j = 0; j < 12; j++){
-                SHA_40(input[i], strlen(input));
-            }
+                SHA_40((const unsigned char *) &input[i], strlen(input));
+        }else{
+            break;
         }
     }
-
     /*
     printf("Input: %s\n", input);
     for(int i =0; i < 5; i++){
@@ -30,7 +24,29 @@ int main (int argc, char** argv) {
 }
 
 unsigned char* SHA_40(const unsigned char* data, size_t size) {
+    unsigned char* digest = (unsigned char*) malloc(DIGEST_SIZE*sizeof(unsigned char));
+    if(digest[0] == '\0'){
+        digest[0] = 11;
+        digest[1] = 22;
+        digest[2] = 33;
+        digest[3] = 44;
+        digest[4] = 55;
+    }
 
+    for(int j = 0; j < 12; j++){
+
+        unsigned char F = ((digest[1] & digest[2]) ^ digest[3]);
+
+        unsigned char E = F + (digest[0] >> 5) + *data + j;
+
+        digest[0] = E;
+        digest[1] = digest[0];
+        digest[2] = digest[1] << 2; 
+        digest[3] = digest[2];
+        digest[4] = digest[3];
+    }
+    
+    printf("Hash: %s\n", digest);
     return 0;
 } // SHA_40 hash function 
 
