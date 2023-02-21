@@ -1,7 +1,7 @@
 #include "hash.h"
 
 int main (int argc, char** argv) {
-    char input[100] = "sohail";
+    char input[100] = {0};
     struct Digest* digest;
 
     //geting input
@@ -12,6 +12,7 @@ int main (int argc, char** argv) {
     /*
     digest = SHA_40((const unsigned char*)input, strlen(input));
     for(int i = 0; i < DIGEST_SIZE; i++){
+        //prints this out as decimal numbers but can be anyhting
         printf("%x ", digest->hash0);
         printf("%x ", digest->hash1);
         printf("%x ", digest->hash2);
@@ -24,7 +25,7 @@ int main (int argc, char** argv) {
    //testing digest_equal
    /*
     digest = SHA_40((const unsigned char*)input, strlen(input));
-    char input2[100] = "shaik";
+    char input2[100] = {0};
     printf("Enter a secondary input: ");
     scanf("%s", input2);
     struct Digest* digest2;
@@ -33,11 +34,16 @@ int main (int argc, char** argv) {
         printf("The digests are equal");
     else
         printf("The digests are not equal");
-    */
 
     return 0;
+    */
+    free(digest);
 }
 
+/*
+modified to return a struct that represents a digest.
+The method takes the entire string then for each letter it will do the hashing function
+*/
 struct Digest* SHA_40(const unsigned char* data, size_t size) {
     struct Digest* digest = (struct Digest*) malloc(DIGEST_SIZE);
     for(int i = 0; i < size; i++){
@@ -69,6 +75,10 @@ struct Digest* SHA_40(const unsigned char* data, size_t size) {
 } // SHA_40 hash function 
 
 
+/*
+takes two digests and compares them to see if they are equal
+dies this by comparing each byte in hte hash
+*/
 int digest_equal(struct Digest *digest1, struct Digest *digest2) { //return 1 (true) or 0 (false)
     int result;
 
