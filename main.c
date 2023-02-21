@@ -58,7 +58,7 @@ struct Digest* SHA_40(const unsigned char* data, size_t size) {
             }
 
             unsigned char F = ((digest->hash1 & digest->hash2) ^ digest->hash3);
-            unsigned char E = F + (digest->hash0 >> 5) + data[i] + j;
+            unsigned char E = F + (digest->hash0 >> 3) + data[i] + j;
             digest->hash0 = E;
             digest->hash1 = digest->hash0;
             digest->hash2 = digest->hash1 << 2; 
