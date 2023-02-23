@@ -9,18 +9,16 @@ int main (int argc, char** argv) {
     scanf("%s", input);
 
     //testing hashing
-    /*
+    
     digest = SHA_40((const unsigned char*)input, strlen(input));
-    for(int i = 0; i < DIGEST_SIZE; i++){
         //prints this out as decimal numbers but can be anyhting
         printf("%x ", digest->hash0);
         printf("%x ", digest->hash1);
         printf("%x ", digest->hash2);
         printf("%x ", digest->hash3);
         printf("%x ", digest->hash4);
-    }
-    */
     
+
 
    //testing digest_equal
    /*
@@ -57,13 +55,18 @@ struct Digest* SHA_40(const unsigned char* data, size_t size) {
                 digest->hash4 = 55;
             }
 
+            BYTE A = digest->hash0;
+            BYTE B = digest->hash1;
+            BYTE C = digest->hash2;
+            BYTE D = digest->hash3;
+
             unsigned char F = ((digest->hash1 & digest->hash2) ^ digest->hash3);
             unsigned char E = F + (digest->hash0 >> 3) + data[i] + j;
             digest->hash0 = E;
-            digest->hash1 = digest->hash0;
-            digest->hash2 = digest->hash1 << 2; 
-            digest->hash3 = digest->hash2;
-            digest->hash4 = digest->hash3;
+            digest->hash1 = A;
+            digest->hash2 = B << 2; 
+            digest->hash3 = C;
+            digest->hash4 = D;
 
             }
         }else{
